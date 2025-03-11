@@ -1,17 +1,33 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div>
+      {{ products }}
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  components: {},
+  data() {
+    return {
+      name: 'ilah',
+      products: []
+    }
+  },
+  async mounted() {
+    const test = await this.$axios.get('');
+    console.log('test', test);
+
+  },
+  methods: {},
+  computed: {
+    products() {
+      return this.$store.getters.sort;
+    },
   }
 }
 </script>
