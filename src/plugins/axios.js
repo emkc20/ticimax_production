@@ -19,7 +19,6 @@ instance.interceptors.response.use(
         return response;
     },
     (error) => {
-        // Hata yönetimi
         console.error('API Hatası:', error);
         return Promise.reject(error);
     }

@@ -11,10 +11,5 @@ export default new Router({
             name: "product",
             component: () => import("@/page/index.vue"),
         },
-        {
-            path: "/about",
-            name: "about",
-            component: () => import("@/page/about/index.vue"),
-        },
     ]
 })
