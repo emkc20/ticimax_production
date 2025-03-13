@@ -2,101 +2,87 @@
   <div class="products-container">
     <h3>Ürün Tablosu</h3>
     <div class="products-container-header">
-      <product-pagination :totalItems="totalItems" :totalPages="totalPages" @handlePage="handlePage"/>
+      <product-pagination :totalItems="totalItemsCount" :totalPages="totalPagesCount" @handlePage="handlePage"/>
       <sort-select/>
     </div>
 
-    <div v-if="loading">
+    <div v-if="isLoading">
       <loading-spinner/>
     </div>
 
-    <div v-if="error" class="error">{{ error }}</div>
+    <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
 
-    <div class="products-container-items" v-if="!loading && products?.length">
-      <product-items :products="products"/>
+    <div class="products-container-items" v-if="!isLoading && productsList?.length">
+      <product-items :products="productsList"/>
     </div>
 
-    <div v-if="!loading && !products.length" class="no-products">Ürün bulunamadı.</div>
+    <div v-if="!isLoading && !productsList.length" class="no-products">Ürün bulunamadı.</div>
   </div>
 </template>
 
-<script>
-import product from "@/store/product";
+<script setup>
 import SortSelect from "@/components/SortSelect/SortSelect.vue";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner.vue";
-import ProductPagination from "@/components/ProductPagination/ProductPagination.vue";
 import ProductItems from "@/components/ProductItems/ProductItems.vue";
+import ProductPagination from "@/components/ProductPagination/ProductPagination.vue";
+import {useProductStore} from '@/stores/product';
+
+import {ref, computed, onMounted, watch} from "vue";
+import {useRoute, useRouter} from "vue-router";
+
+const router = useRouter();
+const route = useRoute();
+const productStore = useProductStore();
+
+const currentPage = ref(parseInt(route.query?.page) || 1);
+const productsList = computed(() => productStore.productsList);
+const isLoading = computed(() => productStore.isLoading);
+const errorMessage = computed(() => productStore.errorMessage);
+const totalPagesCount = computed(() => productStore.totalPagesCount);
+const totalItemsCount = computed(() => productStore.totalItemsCount);
+
+onMounted(async () => {
+  await fetchData(currentPage.value);
+});
 
 
-export default {
-  name: "productList",
-  components: {
-    ProductItems,
-    ProductPagination,
-    SortSelect,
-    LoadingSpinner
-  },
-  data() {
-    return {
-      page: parseInt(this.$route.query.page) || 1,
+watch(
+    () => route.query.page,
+    async (newPage) => {
+      currentPage.value = parseInt(newPage) || 1;
+      await fetchData(currentPage.value);
     }
-  },
+);
 
-  computed: {
-    product() {
-      return product
-    },
-    products() {
-      return this.$store.getters['product/products'];
-    },
-    loading() {
-      return this.$store.getters['product/loading'];
-    },
-    error() {
-      return this.$store.getters['product/error'];
-    },
-    totalPages() {
-      return this.$store.getters['product/totalPages'] || 1;
-    },
-    totalItems() {
-      return this.$store.getters['product/totalItems'] || 10;
-    },
-  },
-
-  mounted() {
-    this.fetchData();
-  },
-
-  watch: {
-    '$route.query.page': function (newPage) {
-      this.page = Number(newPage) || 1;
-      this.fetchData();
-    }
-  },
-
-  methods: {
-    handlePage(page) {
-      this.navigateTo({page});
-      this.fetchData(page);
-    },
-
-    async fetchData(page = this.page) {
-      await this.$store.dispatch('product/fetchProducts', page)
-      if (this.$route.query.sort) {
-        this.$store.commit('product/setSort', this.$route.query.sort);
-      }
-    },
-
-    navigateTo({page}) {
-      if (this.$route.query.page !== String(page)) {
-        this.$router.push({
-          path: this.$route.path,
-          query: {...this.$route.query, page}
-        });
+watch(
+    () => route.query.sort,
+    (newSort) => {
+      if (newSort) {
+        productStore.setSort(newSort);
       }
     }
+);
+
+const fetchData = async (page) => {
+  await productStore.fetchProducts(page);
+
+  if (route.query.sort) {
+    productStore.setSort(route.query.sort);
   }
-};
+}
+
+const handlePage = (page) => {
+  navigateTo({page});
+}
+
+const navigateTo = ({page}) => {
+  if (route.query.page !== String(page)) {
+    router.push({
+      path: route.path,
+      query: {...route.query, page}
+    });
+  }
+}
 </script>
 
 <style scoped lang="scss" src="./ProductsList.scss"></style>

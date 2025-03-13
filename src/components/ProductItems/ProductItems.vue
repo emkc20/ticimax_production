@@ -17,24 +17,15 @@
     </div>
   </div>
 </template>
-<script>
-import VueStarRating from 'vue-star-rating'
+<script setup>
+import {defineProps} from "vue";
 
-export default {
-  name: "ProductItems",
-  components: {
-
-    VueStarRating,
-
+const {products} = defineProps({
+  products: {
+    type: Array,
+    required: true,
   },
-  props: {
-    products: {
-      type: Array,
-      required: true,
-    },
-
-  },
-}
+});
 </script>
 
 <style scoped lang="scss" src="./ProductItems.scss"></style>

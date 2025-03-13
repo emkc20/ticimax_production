@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const instance = axios.create({
+const api = axios.create({
     baseURL: 'https://dummyjson.com/products',
     timeout: 10000,
 });
 
-instance.interceptors.request.use(
+api.interceptors.request.use(
     (config) => {
         return config;
     },
@@ -14,7 +14,7 @@ instance.interceptors.request.use(
     }
 );
 
-instance.interceptors.response.use(
+api.interceptors.response.use(
     (response) => {
         return response;
     },
@@ -24,8 +24,4 @@ instance.interceptors.response.use(
     }
 );
 
-export default {
-    install(Vue) {
-        Vue.prototype.$axios = instance;
-    }
-};
+export default api

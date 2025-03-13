@@ -1,17 +1,9 @@
 <template>
   <div>
-    <products-list/>
+    <ProductsList/>
   </div>
 </template>
-<script>
+
+<script setup>
 import ProductsList from "@/components/ProductsList/ProductsList.vue";
-
-export default {
-  name: "product",
-  components: {ProductsList}
-
-}
-
 </script>
-
-

@@ -1,48 +1,44 @@
 <template>
   <div class="product-pagination">
-    <pagination :records="totalItems"
-                v-model="page"
-                :per-page="totalPages"
-                @paginate="changePage"
-                class="custom-pagination"/>
+    <vue-awesome-paginate
+        :total-items="totalItems"
+        :items-per-page="10"
+        v-model="page"
+        @click="onClickHandler"
+        class="custom-pagination"
+    />
   </div>
 </template>
 
-<script>
-import Pagination from "vue-pagination-2";
+
+<script setup>
+import {ref, watch, defineProps, defineEmits} from 'vue';
+import {useRoute} from "vue-router";
+import {VueAwesomePaginate} from "vue-awesome-paginate";
+
+const {totalItems} = defineProps({
+  totalItems: {
+    type: Number,
+    required: true,
+  },
+});
+const emit = defineEmits(['handlePage']);
+
+const route = useRoute();
+const page = ref(parseInt(route.query.page) || 1);
 
 
-export default {
-  name: "ProductPagination",
-  components: {
-    Pagination,
-  },
-  props: {
-    totalItems: {
-      type: Number,
-      required: true,
-    },
-    totalPages: {
-      type: Number,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      page: parseInt(this.$route.query.page) || 1,
-    }
-  },
-  watch: {
-    '$route.query.page': function (newPage) {
-      this.page = Number(newPage) || 1;
-    }
-  },
-  methods: {
-    changePage(page) {
-      this.$emit('handlePage', page);
-    },
-  }
+const onClickHandler = (page) => {
+  emit('handlePage', page);
 }
-</script>
 
+watch(
+    () => route.query.page,
+    (newPage) => {
+      page.value = Number(newPage) || 1;
+    }
+);
+
+
+</script>
 <style scoped lang="scss" src="./ProductPagination.scss"></style>
