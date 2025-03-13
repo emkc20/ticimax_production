@@ -48,4 +48,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./SortSelect.scss"></style>
+<style lang="scss" scoped src="./SortSelect.scss"></style>

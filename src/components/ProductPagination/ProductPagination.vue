@@ -1,10 +1,11 @@
 <template>
   <div class="product-pagination">
-    <pagination :records="totalItems"
-                v-model="page"
-                :per-page="totalPages"
-                @paginate="changePage"
-                class="custom-pagination"/>
+    <pagination v-model="page"
+                :per-page="10"
+                :records="totalItems"
+                :total-pages="totalPages"
+                class="custom-pagination"
+                @paginate="changePage"/>
   </div>
 </template>
 
@@ -45,4 +46,4 @@ export default {
 }
 </script>
 
-<style scoped lang="scss" src="./ProductPagination.scss"></style>
+<style lang="scss" scoped src="./ProductPagination.scss"></style>

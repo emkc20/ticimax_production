@@ -13,4 +13,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./LoadingSpinner.scss"></style>
+<style lang="scss" scoped src="./LoadingSpinner.scss"></style>

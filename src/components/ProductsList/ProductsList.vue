@@ -12,7 +12,7 @@
 
     <div v-if="error" class="error">{{ error }}</div>
 
-    <div class="products-container-items" v-if="!loading && products?.length">
+    <div v-if="!loading && products?.length" class="products-container-items">
       <product-items :products="products"/>
     </div>
 
@@ -56,7 +56,7 @@ export default {
       return this.$store.getters['product/error'];
     },
     totalPages() {
-      return this.$store.getters['product/totalPages'] || 1;
+      return this.$store.getters['product/totalPages'] || 20;
     },
     totalItems() {
       return this.$store.getters['product/totalItems'] || 10;
@@ -99,4 +99,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss" src="./ProductsList.scss"></style>
+<style lang="scss" scoped src="./ProductsList.scss"></style>
