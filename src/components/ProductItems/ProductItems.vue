@@ -1,16 +1,16 @@
 <template>
   <div class="product-items">
-    <div class="product-items-card" v-for="product in products" :key="product.id">
-      <img :src="product.thumbnail" alt="">
+    <div v-for="product in products" :key="product.id" class="product-items-card">
+      <img :src="product?.thumbnail" alt="">
       <p class="product-items-card-title">{{ product.title }}</p>
       <p>{{ product.description }}</p>
       <div class="product-items-card-degree">
         <vue-star-rating
-            :star-size="20"
-            :show-rating="false"
+            :increment="0.01"
             :rating="product.rating"
             :read-only="true"
-            :increment="0.01"/>
+            :show-rating="false"
+            :star-size="20"/>
         <p class="product-items-card-degree-price">{{ product.price }} ₺</p>
       </div>
 
@@ -28,4 +28,4 @@ const {products} = defineProps({
 });
 </script>
 
-<style scoped lang="scss" src="./ProductItems.scss"></style>
+<style lang="scss" scoped src="./ProductItems.scss"></style>

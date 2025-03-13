@@ -1,24 +1,24 @@
 <template>
   <div class="product-pagination">
     <vue-awesome-paginate
-        :total-items="totalItems"
-        :items-per-page="10"
         v-model="page"
-        @click="onClickHandler"
-        prev-button-content="<<"
-        next-button-content=">>"
+        :items-per-page="10"
+        :total-items="totalPageItem"
         class="custom-pagination"
+        next-button-content=">>"
+        prev-button-content="<<"
+        @click="onClickHandler"
     />
   </div>
 </template>
 
 
 <script setup>
-import {ref, watch, defineProps, defineEmits} from 'vue';
+import {ref, watch, defineProps, defineEmits, computed} from 'vue';
 import {useRoute} from "vue-router";
 import {VueAwesomePaginate} from "vue-awesome-paginate";
 
-const {totalItems} = defineProps({
+const props = defineProps({
   totalItems: {
     type: Number,
     required: true,
@@ -28,6 +28,7 @@ const emit = defineEmits(['handlePage']);
 
 const route = useRoute();
 const page = ref(parseInt(route.query.page) || 1);
+const totalPageItem = computed(() => props.totalItems);
 
 
 const onClickHandler = (page) => {
@@ -43,4 +44,4 @@ watch(
 
 
 </script>
-<style scoped lang="scss" src="./ProductPagination.scss"></style>
+<style lang="scss" scoped src="./ProductPagination.scss"></style>

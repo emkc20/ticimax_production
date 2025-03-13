@@ -1,6 +1,6 @@
 <template>
   <div class="sort-select">
-    <label for="sort" class="deneme">Fiyata Göre Sırala:</label>
+    <label class="deneme" for="sort">Fiyata Göre Sırala:</label>
     <select v-model="selectedSort" @change="changeSort">
       <option disabled value="Seçiniz">Seçiniz</option>
       <option value="inc">Artan</option>
@@ -45,4 +45,4 @@ const changeSort = () => {
 };
 </script>
 
-<style scoped lang="scss" src="./SortSelect.scss"></style>
+<style lang="scss" scoped src="./SortSelect.scss"></style>

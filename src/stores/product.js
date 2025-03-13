@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia';
 import {ref, computed} from 'vue';
-import axios from "@/plugins/axios";
+import service from '@/service/productApi'
 
 export const useProductStore = defineStore('product', () => {
     const products = ref([]);
@@ -50,7 +50,7 @@ export const useProductStore = defineStore('product', () => {
         };
 
         try {
-            const response = await axios.get(`?limit=${params.limit}&skip=${params.skip}`);
+            const response = await service.getProductList({limit: params.limit, skip: params.skip});
 
             if (response.data && response.data.products) {
                 setProducts(response.data.products);

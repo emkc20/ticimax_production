@@ -2,7 +2,7 @@
   <div class="products-container">
     <h3>Ürün Tablosu</h3>
     <div class="products-container-header">
-      <product-pagination :totalItems="totalItemsCount" :totalPages="totalPagesCount" @handlePage="handlePage"/>
+      <product-pagination :total-items="totalItemsCount" :total-pages="totalPagesCount" @handlePage="handlePage"/>
       <sort-select/>
     </div>
 
@@ -12,7 +12,7 @@
 
     <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
 
-    <div class="products-container-items" v-if="!isLoading && productsList?.length">
+    <div v-if="!isLoading && productsList?.length" class="products-container-items">
       <product-items :products="productsList"/>
     </div>
 
@@ -43,32 +43,29 @@ const totalItemsCount = computed(() => productStore.totalItemsCount);
 
 onMounted(async () => {
   await fetchData(currentPage.value);
+  if (route.query.sort) {
+    productStore.setSort(route.query.sort);
+  }
 });
 
 
 watch(
-    () => route.query.page,
-    async (newPage) => {
-      currentPage.value = parseInt(newPage) || 1;
-      await fetchData(currentPage.value);
-    }
-);
+    () => route.query,
+    async (query) => {
+      if (query?.page) {
+        currentPage.value = parseInt(query.page) || 1;
+        await fetchData(currentPage.value);
+      }
+      if (query?.sort) {
+        productStore.setSort(query.sort);
 
-watch(
-    () => route.query.sort,
-    (newSort) => {
-      if (newSort) {
-        productStore.setSort(newSort);
       }
     }
 );
 
+
 const fetchData = async (page) => {
   await productStore.fetchProducts(page);
-
-  if (route.query.sort) {
-    productStore.setSort(route.query.sort);
-  }
 }
 
 const handlePage = (page) => {
@@ -85,4 +82,4 @@ const navigateTo = ({page}) => {
 }
 </script>
 
-<style scoped lang="scss" src="./ProductsList.scss"></style>
+<style lang="scss" scoped src="./ProductsList.scss"></style>
