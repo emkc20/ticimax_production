@@ -5,6 +5,8 @@
         :items-per-page="10"
         v-model="page"
         @click="onClickHandler"
+        prev-button-content="<<"
+        next-button-content=">>"
         class="custom-pagination"
     />
   </div>
