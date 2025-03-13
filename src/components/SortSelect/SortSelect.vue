@@ -1,6 +1,6 @@
 <template>
   <div class="sort-select">
-    <label for="sort">Fiyat Sıralamasss:</label>
+    <label for="sort">Fiyata Göre Sırala:</label>
     <select v-model="sort" @change="changeSort">
       <option disabled value="Seçiniz">Seçiniz</option>
       <option value="inc">Artan</option>

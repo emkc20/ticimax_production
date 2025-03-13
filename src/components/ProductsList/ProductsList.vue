@@ -58,7 +58,6 @@ export default {
   data() {
     return {
       page: parseInt(this.$route.query.page) || 1,
-      sort: 'Seçiniz'
     }
   },
 
@@ -102,6 +101,9 @@ export default {
 
     async fetchData(page = this.page) {
       await this.$store.dispatch('product/fetchProducts', page)
+      if (this.$route.query.sort) {
+        this.$store.commit('product/setSort', this.$route.query.sort);
+      }
     },
 
     navigateTo({page}) {
