@@ -110,7 +110,7 @@ export default {
       if (this.$route.query.page !== String(page)) {
         this.$router.push({
           path: this.$route.path,
-          query: {page}
+          query: {...this.$route.query, page}
         });
       }
     }
