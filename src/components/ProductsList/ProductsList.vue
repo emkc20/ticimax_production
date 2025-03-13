@@ -2,37 +2,18 @@
   <div class="products-container">
     <h3>Ürün Tablosu</h3>
     <div class="products-container-header">
-      <pagination :records="totalItems"
-                  v-model="page"
-                  :per-page="totalPages"
-                  :show-info="false"
-                  @paginate="handlePage"
-                  :limit="2"
-                  class="custom-pagination"/>
+      <product-pagination :totalItems="totalItems" :totalPages="totalPages" @handlePage="handlePage"/>
       <sort-select/>
     </div>
+
     <div v-if="loading">
       <loading-spinner/>
     </div>
 
     <div v-if="error" class="error">{{ error }}</div>
 
-    <div class="products-container-list" v-if="!loading && products?.length">
-      <div class="products-container-list-card" v-for="product in products" :key="product.id">
-        <img :src="product.thumbnail" alt="">
-        <p class="products-container-list-card-title">{{ product.title }}</p>
-        <p>{{ product.description }}</p>
-        <div class="products-container-list-card-degree">
-          <vue-star-rating
-              :star-size="20"
-              :show-rating="false"
-              :rating="product.rating"
-              :read-only="true"
-              :increment="0.01"/>
-          <p class="products-container-list-card-degree-price">{{ product.price }} ₺</p>
-        </div>
-
-      </div>
+    <div class="products-container-items" v-if="!loading && products?.length">
+      <product-items :products="products"/>
     </div>
 
     <div v-if="!loading && !products.length" class="no-products">Ürün bulunamadı.</div>
@@ -40,18 +21,18 @@
 </template>
 
 <script>
-import Pagination from 'vue-pagination-2';
-import VueStarRating from 'vue-star-rating'
 import product from "@/store/product";
 import SortSelect from "@/components/SortSelect/SortSelect.vue";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner.vue";
+import ProductPagination from "@/components/ProductPagination/ProductPagination.vue";
+import ProductItems from "@/components/ProductItems/ProductItems.vue";
 
 
 export default {
   name: "productList",
   components: {
-    Pagination,
-    VueStarRating,
+    ProductItems,
+    ProductPagination,
     SortSelect,
     LoadingSpinner
   },

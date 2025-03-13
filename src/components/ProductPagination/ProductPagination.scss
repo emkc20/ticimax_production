@@ -1,0 +1,16 @@
+::v-deep .custom-pagination {
+  width: 100%;
+
+  .page-link {
+    padding: 8px;
+    font-size: 16px;
+  }
+
+  .VuePagination__pagination {
+    justify-content: center;
+  }
+
+  .VuePagination__count {
+    display: none;
+  }
+}
