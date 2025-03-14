@@ -70,7 +70,6 @@ export default {
   watch: {
     '$route.query.page': function (newPage) {
       this.page = Number(newPage) || 1;
-      this.fetchData();
     }
   },
 
