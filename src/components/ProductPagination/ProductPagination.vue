@@ -12,7 +12,6 @@
   </div>
 </template>
 
-
 <script setup>
 import {ref, watch, defineProps, defineEmits, computed} from 'vue';
 import {useRoute} from "vue-router";
@@ -25,11 +24,9 @@ const props = defineProps({
   },
 });
 const emit = defineEmits(['handlePage']);
-
 const route = useRoute();
 const page = ref(parseInt(route.query.page) || 1);
 const totalPageItem = computed(() => props.totalItems);
-
 
 const onClickHandler = (page) => {
   emit('handlePage', page);
@@ -42,6 +39,6 @@ watch(
     }
 );
 
-
 </script>
+
 <style lang="scss" scoped src="./ProductPagination.scss"></style>

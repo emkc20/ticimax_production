@@ -1,6 +1,6 @@
 <template>
   <div class="sort-select">
-    <label class="deneme" for="sort">Fiyata Göre Sırala:</label>
+    <label for="sort">Fiyata Göre Sırala:</label>
     <select v-model="selectedSort" @change="changeSort">
       <option disabled value="Seçiniz">Seçiniz</option>
       <option value="inc">Artan</option>
@@ -17,9 +17,7 @@ import {useRoute, useRouter} from "vue-router";
 const route = useRoute();
 const router = useRouter();
 const productStore = useProductStore();
-
 const selectedSort = ref(route.query.sort || 'Seçiniz');
-
 const {setSort} = productStore;
 
 watch(

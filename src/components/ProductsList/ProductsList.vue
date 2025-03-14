@@ -48,7 +48,6 @@ onMounted(async () => {
   }
 });
 
-
 watch(
     () => route.query,
     async (query) => {
@@ -62,7 +61,6 @@ watch(
       }
     }
 );
-
 
 const fetchData = async (page) => {
   await productStore.fetchProducts(page);
