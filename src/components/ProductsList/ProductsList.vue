@@ -64,7 +64,7 @@ export default {
   },
 
   mounted() {
-    this.fetchData();
+    this.fetchData(this.page);
   },
 
   watch: {
@@ -79,7 +79,7 @@ export default {
       this.fetchData(page);
     },
 
-    async fetchData(page = this.page) {
+    async fetchData(page) {
       await this.$store.dispatch('product/fetchProducts', page)
       if (this.$route.query.sort) {
         this.$store.commit('product/setSort', this.$route.query.sort);
