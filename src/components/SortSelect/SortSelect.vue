@@ -25,9 +25,9 @@ watch(
     (newSort) => {
       if (newSort) {
         selectedSort.value = newSort;
-      } else {
-        selectedSort.value = 'Seçiniz';
+        return;
       }
+      selectedSort.value = 'Seçiniz';
     }
 );
 

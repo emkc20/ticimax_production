@@ -57,7 +57,6 @@ watch(
       }
       if (query?.sort) {
         productStore.setSort(query.sort);
-
       }
     }
 );
