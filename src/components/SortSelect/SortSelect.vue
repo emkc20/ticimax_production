@@ -18,7 +18,6 @@ const route = useRoute();
 const router = useRouter();
 const productStore = useProductStore();
 const selectedSort = ref(route.query.sort || 'Seçiniz');
-const {setSort} = productStore;
 
 watch(
     () => route.query.sort,
@@ -33,7 +32,7 @@ watch(
 
 const changeSort = () => {
   if (selectedSort.value !== 'Seçiniz') {
-    setSort(selectedSort.value);
+    productStore.setSort(selectedSort.value);
 
     router.push({
       path: route.path,
